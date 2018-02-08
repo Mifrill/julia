@@ -1370,6 +1370,9 @@ end
     Base.@deprecate log Base.log
 end
 
+# Issue 25786
+@deprecate_binding DevNull DEVNULL
+
 # END 0.7 deprecations
 
 # BEGIN 1.0 deprecations

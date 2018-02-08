@@ -1038,6 +1038,8 @@ Deprecated or removed
 
   * `wait` and `fetch` on `Task` now resemble the interface of `Future`
 
+  * The constant `DevNull` has been deprecated in favor of `DEVNULL` ([#25786]).
+
 Command-line option changes
 ---------------------------
 
@@ -1297,3 +1299,4 @@ Command-line option changes
 [#25655]: https://github.com/JuliaLang/julia/issues/25655
 [#25725]: https://github.com/JuliaLang/julia/issues/25725
 [#25745]: https://github.com/JuliaLang/julia/issues/25745
+[#25786]: https://github.com/JuliaLang/julia/issues/25786
