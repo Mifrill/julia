@@ -1197,8 +1197,8 @@ isdefined(Main, :TestHelpers) || @eval Main include("TestHelpers.jl")
 using .Main.TestHelpers: Furlong
 @testset "dimensional correctness" begin
     @test length(Vector(Furlong(2):Furlong(10))) == 9
-    @test length(range(Furlong(2), 9)) == 9
-    @test Vector(Furlong(2):Furlong(1):Furlong(10)) == Vector(range(Furlong(2),Furlong(1),9)) == Furlong.(2:10)
+    @test length(range(Furlong(2), length=9)) == 9
+    @test Vector(Furlong(2):Furlong(1):Furlong(10)) == Vector(range(Furlong(2), step=Furlong(1), length=9)) == Furlong.(2:10)
     @test Vector(Furlong(1.0):Furlong(0.5):Furlong(10.0)) ==
           Vector(Furlong(1):Furlong(0.5):Furlong(10)) == Furlong.(1:0.5:10)
 end
