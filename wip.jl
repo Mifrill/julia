@@ -17,7 +17,9 @@ linfo = ccall(:jl_specializations_get_linfo, Ref{Core.MethodInstance},
               (Any, Any, Any, UInt), meth, ti, env, world)
 
 # generate IR
-native_code = ccall(:jl_create_native, Ptr{Cvoid}, (Vector{Core.MethodInstance},), [linfo])
+native_code = ccall(:jl_create_native, Ptr{Cvoid},
+                    (Vector{Core.MethodInstance}, Base.CodegenParams),
+                    [linfo], Base.CodegenParams())
 mod_ref = ccall(:jl_get_llvm_module, Ptr{Cvoid}, (Ptr{Cvoid},), native_code)
 @assert mod_ref != C_NULL
 ccall(:jl_dump_llvm_module, Nothing, (Ptr{Cvoid},), mod_ref)
