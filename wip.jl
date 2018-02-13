@@ -25,19 +25,20 @@ mod_ref = ccall(:jl_get_llvm_module, Ptr{Cvoid}, (Ptr{Cvoid},), native_code)
 ccall(:jl_dump_llvm_module, Nothing, (Ptr{Cvoid},), mod_ref)
 
 # get the top-level function index
-api = Ref{UInt8}()
+api = Ref{UInt8}(typemax(UInt8))
 func_idx = Ref{UInt32}()
 specfunc_idx = Ref{UInt32}()
 ccall(:jl_get_function_id, Nothing,
-      (Ptr{Cvoid}, Core.MethodInstance, Ptr{UInt8}, Ptr{UInt32}, Ptr{UInt32}),
-      native_code, linfo, api, func_idx, specfunc_idx)
+      (Ptr{Cvoid}, Ptr{Core.MethodInstance}, Ptr{UInt8}, Ptr{UInt32}, Ptr{UInt32}),
+      native_code, Ref(linfo), api, func_idx, specfunc_idx)
+@assert api[] != typemax(api[])
 
 # get the top-level function
 func_ref = ccall(:jl_get_llvm_function, Ptr{Cvoid},
                  (Ptr{Cvoid}, UInt32),
-                 native_code, func_idx[])
+                 native_code, func_idx[]-1)
 ccall(:jl_dump_llvm_value, Nothing, (Ptr{Cvoid},), func_ref)
 specfunc_ref = ccall(:jl_get_llvm_function, Ptr{Cvoid},
                      (Ptr{Cvoid}, UInt32),
-                     native_code, specfunc_idx[])
+                     native_code, specfunc_idx[]-1)
 ccall(:jl_dump_llvm_value, Nothing, (Ptr{Cvoid},), specfunc_ref)
