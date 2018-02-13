@@ -6386,7 +6386,7 @@ extern "C" void jl_init_codegen(void)
 
 // the rest of this file are convenience functions
 // that are exported for assisting with debugging from gdb
-extern "C" void jl_dump_llvm_value(void *v)
+extern "C" JL_DLLEXPORT void jl_dump_llvm_value(void *v)
 {
     llvm_dump((Value*)v);
 }
@@ -6401,7 +6401,7 @@ extern "C" void jl_dump_llvm_type(void *v)
     llvm_dump((Type*)v);
 }
 
-extern "C" void jl_dump_llvm_module(void *v)
+extern "C" JL_DLLEXPORT void jl_dump_llvm_module(void *v)
 {
     llvm_dump((Module*)v);
 }
